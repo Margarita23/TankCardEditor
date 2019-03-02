@@ -84,6 +84,8 @@
         exports.__esModule = true;
         var screenLog = document.querySelector('#screen-log');
         document.addEventListener('click', logKey);
+        var img = document.createElement("img");
+        img.src = "../asserts/tankTwo.ico";
         function logKey(e) {
             console.log("Screen X/Y: " + e.screenX + ", " + e.screenY);
             console.log("Client X/Y: " + e.clientX + ", " + e.clientY);

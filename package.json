@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "build": "tsc-bundle ./ts/app.ts && webpack --config prod.config.js"
+        "build": "tsc-bundle ./ts/app.ts && webpack --config webpack.config.js"
     },
     "devDependencies": {
         "webpack": "^4.29.6"

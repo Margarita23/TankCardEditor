@@ -38,7 +38,8 @@ const config = {
     extensions: [
       '.tsx',
       '.ts',
-      '.js'
+      '.js',
+      ".json"
     ]
   }
 }
