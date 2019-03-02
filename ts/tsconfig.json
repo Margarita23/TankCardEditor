@@ -9,8 +9,5 @@
     "moduleResolution": "node",
     "target": "es5",
     "allowJs": true,
-  },
-  "include": [
-    "./**/*"
-  ]
+  }
 }
