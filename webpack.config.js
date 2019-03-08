@@ -1,12 +1,10 @@
 const webpack = require('webpack');
 const path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
-  entry: './ts/app.ts',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
-  },
+  mode: "development",
+  entry: "./src/ts/app.ts",
   module: {
     rules: [
       {
@@ -15,33 +13,36 @@ const config = {
         exclude: /node_modules/
       },
       {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
+        test: /\.html$/,
+        use: ['html-loader']
       },
       {
         test: /\.png$/,
-        use: [
+        use:[
           {
-            loader: 'url-loader',
+            loader: 'file-loader',
             options: {
-              mimetype: 'image/png'
+              name: '[name].[ext]',
+              outputPath: 'assets/',
+              publicPath: 'assets/'
             }
           }
         ]
       }
     ]
   },
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist')
+  },
   resolve: {
-    extensions: [
-      '.tsx',
-      '.ts',
-      '.js',
-      ".json"
-    ]
-  }
-}
+    extensions: [ '.ts', '.tsx', ".js", ".json"]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'src/index.html'
+    })
+  ]
+};
 
 module.exports = config;
