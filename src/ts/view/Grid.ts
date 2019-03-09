@@ -17,7 +17,7 @@ export class Grid {
     private elementsFieldSize: number = this.secondBlock*0.2;
     private cellSize: number = this.arenaSize / 52;
     
-    //private val!: Unit;
+    //private unitVal: Unit;
 
     constructor(){
         this.canvas = <HTMLCanvasElement>document.getElementById("canvas");
@@ -25,27 +25,20 @@ export class Grid {
         this.canvas.height = this.totalHeight;
         this.ctx = <CanvasRenderingContext2D>this.canvas.getContext("2d");
     }
+/*
+    get unit() {
+        return this.unitVal;
+    }
 
-    //get value() {
-    //    return this.val;
-    //}
-
-    //set value(value: Unit){
-    //    this.val = value;
-    //}
-
+    set unit(value: Unit){
+        this.unitVal = value;
+    }
+*/
     draw(){
         this.emptyArena(this.arena);
         this.brushes();
         this.units();
-
-        //this.ctx.fillStyle = "red";
-        //this.ctx.strokeRect((this.secondBlock + this.mainBorder) - this.elementsFieldSize*0.9, 0 + this.mainBorder, this.elementsFieldSize, this.elementsFieldSize);
-        //console.log(this.totalWidth);
-        //console.log(this.totalHeight);
-        //console.log(this.arenaSize);
-        //console.log(this.elementsFieldSize);
-    }
+    };
 
     emptyArena(arena: number[][]){
         for(var i = 0; i < arena.length; i++){
@@ -61,7 +54,7 @@ export class Grid {
     }
 
     brushes(){
-        for(var i = 0; i < 3; i++){
+        for(var i of [1,2,4]){
             this.allBrushes(i);
         }
     }
@@ -70,19 +63,19 @@ export class Grid {
         this.ctx.font = this.elementsFieldSize*0.1 + "px Arial";
             switch(brush){
                 case Brush.oneCell : 
-                this.ctx.strokeStyle = "rgb(200,0,0)";
+                this.ctx.strokeStyle = "rgb(100,100,100)";
                 this.ctx.fillText("Little", (this.secondBlock + this.mainBorder) - this.elementsFieldSize*0.9, this.mainBorder + this.arenaSize*0.2*brush);
-                this.ctx.strokeRect((this.secondBlock + this.mainBorder) - this.elementsFieldSize*0.9, this.mainBorder + this.arenaSize*0.2*brush, this.cellSize, this.cellSize);
+                this.ctx.strokeRect((this.secondBlock + this.mainBorder) - this.elementsFieldSize*0.9, this.mainBorder + this.arenaSize*0.2*brush, this.cellSize*brush, this.cellSize*brush);
                 break;
             case Brush.fourCell : 
                 this.ctx.strokeStyle = "rgb(100,100,100)";
                 this.ctx.fillText("Middle", (this.secondBlock + this.mainBorder) - this.elementsFieldSize*0.9, this.mainBorder + this.arenaSize*0.2*brush);
-                this.ctx.strokeRect((this.secondBlock + this.mainBorder) - this.elementsFieldSize*0.9, this.mainBorder + this.arenaSize*0.2*brush, this.cellSize*2, this.cellSize*2);
+                this.ctx.strokeRect((this.secondBlock + this.mainBorder) - this.elementsFieldSize*0.9, this.mainBorder + this.arenaSize*0.2*brush, this.cellSize*brush, this.cellSize*brush);
                 break;
             case Brush.sixteenCell : 
-                this.ctx.strokeStyle = "rgb(0,200,0)";
-                this.ctx.fillText("Big", (this.secondBlock + this.mainBorder) - this.elementsFieldSize*0.9, this.mainBorder + this.arenaSize*0.2*brush);
-                this.ctx.strokeRect((this.secondBlock + this.mainBorder) - this.elementsFieldSize*0.9, this.mainBorder + this.arenaSize*0.2*brush, this.cellSize*4, this.cellSize*4);
+                this.ctx.strokeStyle = "rgb(100,100,100)";
+                this.ctx.fillText("Big", (this.secondBlock + this.mainBorder) - this.elementsFieldSize*0.9, this.mainBorder + this.arenaSize*0.2*(brush-1));
+                this.ctx.strokeRect((this.secondBlock + this.mainBorder) - this.elementsFieldSize*0.9, this.mainBorder + this.arenaSize*0.2*(brush-1), this.cellSize*brush, this.cellSize*brush);
                 break;
         }
     }
