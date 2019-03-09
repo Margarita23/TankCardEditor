@@ -1,19 +1,13 @@
 import { Grid } from "./view/Grid";
 import { Unit } from "./view/Unit";
+import { Brush } from "./view/Brush";
 
 let grid = new Grid();
 grid.draw();
 
 
-document.addEventListener("click", getClickPosition, false);
+document.addEventListener("click", fillCell, false);
 
-function getClickPosition(e:any) {
-  var xPosition = e.clientX;
-  var yPosition = e.clientY;
-  grid.fillCell(Unit.brick, e.clientX, e.clientY);
-}
-
-  console.log("Screen X/Y: " );
-  console.log("Client X/Y: ");
-
-
+function fillCell(e:any) {
+  grid.fillCell(Brush.sixteenCell,Unit.brick, e.clientX, e.clientY);
+};

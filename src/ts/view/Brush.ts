@@ -1,5 +1,5 @@
 export enum Brush{
-    oneCell,
-    fourCell,
-    sixteenCell
+    oneCell = 1,
+    fourCell = 2,
+    sixteenCell = 4
 }
