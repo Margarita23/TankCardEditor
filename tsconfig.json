@@ -1,13 +1,38 @@
 {
   "compilerOptions": {
-      "outDir": "./dist/",
-      "sourceMap": true,
-      "strict": true,
-      "noImplicitReturns": true,
-      "noImplicitAny": true,
-      "module": "es6",
-      "moduleResolution": "node",
-      "target": "es5",
-      "allowJs": true,
-  }
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "module": "amd",
+    "target": "es5",
+    "allowJs": true,
+    "sourceMap": true,
+    "strict": true,
+    "noEmit": false,
+    "checkJs": false,
+    "strictNullChecks": false,
+    "strictFunctionTypes": true,
+    "downlevelIteration": true,
+    "importHelpers": true,
+    "lib": [
+      "dom",
+      "es5",
+      "es2015.collection",
+      "es2015.iterable"
+    ],
+    //"module": "commonjs",
+    "outDir": "./dist/",
+    "esModuleInterop": true,
+    "plugins": [
+      {
+        "name": "typescript-tslint-plugin",
+        "alwaysShowRuleFailuresAsWarnings": false,
+        "ignoreDefinitionFiles": true,
+        "configFile": "./tslint.json",
+        "suppressWhileTypeErrorsPresent": false,
+        "mockTypeScriptVersion": false
+      }
+    ],
+  },
+  "compileOnSave": true
 }

@@ -3,7 +3,7 @@
         "build": "tsc-bundle ./src/ts/app.ts && webpack --config webpack.config.js"
     },
     "devDependencies": {
-        "@types/node": "^11.10.4",
+        "@types/node": "^11.12.1",
         "@webpack-cli/init": "^0.1.3",
         "acorn": "^6.1.1",
         "extract-text-webpack-plugin": "^2.1.2",

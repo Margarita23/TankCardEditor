@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -17,7 +16,7 @@ const config = {
         use: ['html-loader']
       },
       {
-        test: /\.png$/,
+        test: /\.(svg|png)$/,
         use:[
           {
             loader: 'file-loader',
