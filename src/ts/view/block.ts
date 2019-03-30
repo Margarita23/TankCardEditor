@@ -1,7 +1,7 @@
 export enum Block{
     Brick,
     HardBrick,
-    Green,
+    Grass,
     Water,
     Ice
 }

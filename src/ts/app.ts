@@ -13,9 +13,6 @@ var canvas = grid.canvas;
 
 editor.run();
 
-
-
-
 function getMousePosition(canvas: HTMLCanvasElement, evt: MouseEvent) {
   var rect = canvas.getBoundingClientRect();
   return {
@@ -31,6 +28,7 @@ canvas.addEventListener("click", function (evt) {
 
 unitCan.addEventListener("click", function (evt) {
   var mousePos = getMousePosition(unitCan, evt);
+  //if(unit.blocksPosition)
   console.log(mousePos.x + ',' + mousePos.y);
 }, false);
 
@@ -38,3 +36,7 @@ document.addEventListener("click", fillCell, false);
   function fillCell(e:any) {
     grid.fillCell(Brush.SixteenCell, Block.Brick, e.clientX, e.clientY);
   };
+
+function isBelongsToBlock(point:number[], blockBorder: number[]){
+
+}
