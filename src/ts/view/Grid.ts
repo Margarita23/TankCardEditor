@@ -5,7 +5,7 @@ import { Brush } from "./brush";
 export class Grid {
     private arena: Arena = new Arena;
     public canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("grid");;
-    public ctx: CanvasRenderingContext2D = <CanvasRenderingContext2D>this.canvas.getContext("2d");
+    public ctx: CanvasRenderingContext2D = <CanvasRenderingContext2D>this.canvas.getContext("2d", { alpha: true });
 
     private totalWidth: number = parent.innerWidth*0.7;
     private totalHeight: number = parent.innerHeight;
