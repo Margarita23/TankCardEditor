@@ -28,15 +28,24 @@ canvas.addEventListener("click", function (evt) {
 
 unitCan.addEventListener("click", function (evt) {
   var mousePos = getMousePosition(unitCan, evt);
-  //if(unit.blocksPosition)
-  console.log(mousePos.x + ',' + mousePos.y);
+
+  var myBLOCK = "";
+  console.log("mx - " + mousePos.x + ', my - ' + mousePos.y);
+  unit.blocks.map(block => {
+    var blockEnum = Object.values(block)[0];
+    var x = Object.values(block)[1];
+    var y = Object.values(block)[2];
+    var blockSize = Object.values(block)[3];
+
+    if((x < mousePos.x && mousePos.x < x + blockSize))
+      if(blockEnum*blockSize*2 <= mousePos.y && (blockEnum*blockSize*2+blockSize) >= mousePos.y){
+        myBLOCK = blockEnum;
+        console.log("myBLOCK --- " + myBLOCK);
+      }
+    });
 }, false);
 
 document.addEventListener("click", fillCell, false);
   function fillCell(e:any) {
     grid.fillCell(Brush.SixteenCell, Block.Brick, e.clientX, e.clientY);
   };
-
-function isBelongsToBlock(point:number[], blockBorder: number[]){
-
-}
