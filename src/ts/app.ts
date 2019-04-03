@@ -1,7 +1,6 @@
 import { Grid } from "./view/grid";
 import { UnitsControl } from "./view/units-control";
 import { Editor } from "./Editor";
-import { Block } from "./view/block";
 import { Brush } from "./view/brush";
 
 let grid = new Grid();
@@ -10,6 +9,8 @@ let editor = new Editor(grid, unit);
 
 var unitCan = unit.canvas;
 var canvas = grid.canvas;
+var myBRUSH: string | number;
+var myBLOCK: string;
 
 editor.run();
 
@@ -23,29 +24,42 @@ function getMousePosition(canvas: HTMLCanvasElement, evt: MouseEvent) {
 
 canvas.addEventListener("click", function (evt) {
   var mousePos = getMousePosition(canvas, evt);
-  console.log(mousePos.x + ',' + mousePos.y);
 }, false);
 
 unitCan.addEventListener("click", function (evt) {
   var mousePos = getMousePosition(unitCan, evt);
 
-  var myBLOCK = "";
-  console.log("mx - " + mousePos.x + ', my - ' + mousePos.y);
+  myBRUSH = "4";
+  myBLOCK = "0";
+
+  unit.brush.map(brush => {
+    var brushObject = Object(brush);
+    var startX = brushObject.startX;
+    var startY = brushObject.startY;
+    var cell = brushObject.cell;
+    if(((Brush.SixteenCell * cell*1.5 - brushObject.brush*cell/2) <= mousePos.x) && ((Brush.SixteenCell * cell*1.5 + brushObject.brush*cell/2) >= mousePos.x)){
+      if((Brush.SixteenCell * cell * brushObject.brush <= mousePos.y) && (Brush.SixteenCell * cell * brushObject.brush + cell * brushObject.brush >= mousePos.y)){
+        myBRUSH = brushObject.brush;
+        editor.actingBrush[0] = Number(myBRUSH);
+      }
+    }
+  });
+
   unit.blocks.map(block => {
     var blockEnum = Object.values(block)[0];
     var x = Object.values(block)[1];
-    var y = Object.values(block)[2];
     var blockSize = Object.values(block)[3];
 
     if((x < mousePos.x && mousePos.x < x + blockSize))
-      if(blockEnum*blockSize*2 <= mousePos.y && (blockEnum*blockSize*2+blockSize) >= mousePos.y){
+      if(blockEnum*blockSize*2 + unit.maxBrushSize <= mousePos.y && (blockEnum*blockSize*2+blockSize + unit.maxBrushSize) >= mousePos.y){
         myBLOCK = blockEnum;
-        console.log("myBLOCK --- " + myBLOCK);
+        editor.actingBrush[1] = Number(myBLOCK);
       }
     });
-}, false);
+  }, false);
 
 document.addEventListener("click", fillCell, false);
-  function fillCell(e:any) {
-    grid.fillCell(Brush.SixteenCell, Block.Brick, e.clientX, e.clientY);
-  };
+
+function fillCell(e:any) {
+  grid.fillCell(editor.actingBrush, e.clientX, e.clientY);
+};

@@ -13,7 +13,7 @@ export class UnitsControl{
     private blockValue: Block = Block.Brick;
     private brushValue: Brush = Brush.OneCell;
     private cellSize: number;
-    private maxBrushSize: number;
+    public maxBrushSize: number;
     public blocks: Object[] = [];
     public brush: Object[] = [];
 
@@ -27,19 +27,28 @@ export class UnitsControl{
     }
 
     draw(){
+        this.rubber();
         this.brushes();
         this.units();
     };
 
+    rubber(){
+        let img = new Image();
+            img.src = require("../../assets/sprites/Road.svg");
+            img.onload = () => {
+                this.ctx.drawImage(img, this.maxBrushSize/4, this.maxBrushSize, this.maxBrushSize/2, this.maxBrushSize/2);
+            };
+    }
+
     brushes(){
         this.ctx.font = "30px Arial";
-        this.ctx.fillStyle = "rgba(150,150,150, 0.2)";
-        this.ctx.fillRect(0,0,this.canvas.width, this.canvas.height);
+        this.ctx.fillStyle = "rgb(255,100,0)";
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         const vals = Object.keys(Brush).slice(0, Object.keys(Brush).length/2);
         vals.forEach(brushSize => {
-            this.brush.push({brush: Brush[Number(brushSize)],startX: this.maxBrushSize - (Number(brushSize) * this.cellSize)/2, startY: Number(brushSize) * 20, size: Number(brushSize)});
-            this.ctx.fillStyle = "rgb(150,150,150)";
-            this.ctx.fillRect(this.maxBrushSize - (Number(brushSize) * this.cellSize)/2, Number(brushSize) * 20, Number(brushSize) * this.cellSize, Number(brushSize) * this.cellSize);
+            this.brush.push({brush: Number(brushSize),startX: this.maxBrushSize*1.5 - (Number(brushSize) * this.cellSize)/2, startY: Number(brushSize) * this.maxBrushSize, cell: this.cellSize});
+            this.ctx.strokeStyle = "rgba(255,255,255, 0.9)";
+            this.ctx.strokeRect(this.maxBrushSize*1.5 - (Number(brushSize) * this.cellSize)/2, Number(brushSize) * this.maxBrushSize, Number(brushSize) * this.cellSize, Number(brushSize) * this.cellSize);
         });
     }
 
@@ -48,9 +57,9 @@ export class UnitsControl{
         blocks.forEach(block => {
             this.blocks.push({block: Number(block),startX: this.canvas.width - this.maxBrushSize, startY: Number(block) *  this.maxBrushSize * 2, size: this.maxBrushSize});
             let img = new Image();
-            img.src = require("../../assets/sprites/" + Block[Number(block)] + ".svg");
+            img.src = require("../../assets/sprites/" + Brush[Brush.OneCell] + Block[Number(block)] + ".svg");
             img.onload = () => {
-                this.ctx.drawImage(img, this.canvas.width - this.maxBrushSize, Number(block) *  this.maxBrushSize * 2, this.maxBrushSize, this.maxBrushSize);
+                this.ctx.drawImage(img, this.canvas.width - this.maxBrushSize, Number(block) *  this.maxBrushSize * 2 + this.maxBrushSize, this.maxBrushSize, this.maxBrushSize);
             };
         });
     }
