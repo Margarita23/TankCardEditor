@@ -39,36 +39,10 @@ export class Grid {
     };
 
     fillCell(activeBrush: number[], x: number, y: number){
-        let i;
-        let j;
-        switch(activeBrush[0]){
-            case Brush.OneCell :
-                //для одного маленького квадратика
-                i = Math.floor(x*52/this.arenaSize);
-                j = Math.floor(y*52/this.arenaSize);
-                if((i >=0 && i < 52) && (j >= 0 && j < 52)){
-                    this.ctx.drawImage(this.sprites.get("" + Brush[Number(activeBrush[0])] + Block[Number(activeBrush[1])]), i*this.cellSize, j*this.cellSize, this.cellSize*activeBrush[0], this.cellSize*activeBrush[0]);
-                }
-                break;
-            case Brush.FourCell :
-                //для четырех маленьких квадратиков
-                i = Math.floor(x*26/this.arenaSize);
-                j = Math.floor(y*26/this.arenaSize);
-                if((i >=0 && i < 26) && (j >= 0 && j < 26)){
-                    this.ctx.drawImage(this.sprites.get("" + Brush[Number(activeBrush[0])] + Block[Number(activeBrush[1])]), i*this.cellSize*2, j*this.cellSize*2, this.cellSize*activeBrush[0], this.cellSize*activeBrush[0]);
-                }
-                break;
-            case Brush.SixteenCell :
-                //для одного большого квадрата
-                i = Math.floor(x*13/this.arenaSize);
-                j = Math.floor(y*13/this.arenaSize);
-                if((i >=0 && i < 13) && (j >= 0 && j < 13)){
-                    this.ctx.drawImage(this.sprites.get("" + Brush[Number(activeBrush[0])] + Block[Number(activeBrush[1])]), i*this.cellSize*4, j*this.cellSize*4, this.cellSize*activeBrush[0], this.cellSize*activeBrush[0]);
-                }
-                break;
-        }
-        //if((i >=0 && i < 13) && (j >= 0 && j < 13)){
-        //    this.ctx.drawImage(this.sprites.get("" + Brush[Number(activeBrush[0])] + Block[Number(activeBrush[1])]), i*this.cellSize*4, j*this.cellSize*4, this.cellSize*activeBrush[0], this.cellSize*activeBrush[0]);
-        //}
+        let i = Math.floor(x * (52 / activeBrush[0]) / this.arenaSize);
+        let j = Math.floor(y * (52 / activeBrush[0]) / this.arenaSize);
+        if((i >=0 && i < 52 / activeBrush[0]) && (j >= 0 && j < 52 / activeBrush[0])){
+            this.ctx.drawImage(this.sprites.get("" + Brush[Number(activeBrush[0])] + Block[Number(activeBrush[1])]), i*this.cellSize*activeBrush[0], j*this.cellSize*activeBrush[0], this.cellSize*activeBrush[0], this.cellSize*activeBrush[0]);
+        };
     }
 }

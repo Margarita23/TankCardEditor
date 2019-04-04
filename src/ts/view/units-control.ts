@@ -16,6 +16,7 @@ export class UnitsControl{
     public maxBrushSize: number;
     public blocks: Object[] = [];
     public brush: Object[] = [];
+    public rubber: Object = new Object();
 
     constructor(cellSize: number){
         this.canvas = <HTMLCanvasElement>document.getElementById("units-control");
@@ -27,23 +28,21 @@ export class UnitsControl{
     }
 
     draw(){
-        this.rubber();
+        this.rubberView();
         this.brushes();
         this.units();
     };
 
-    rubber(){
+    rubberView(){
+        this.rubber = new Object({startX: 0, startY: this.maxBrushSize, endX: this.maxBrushSize, endY: this.maxBrushSize});
         let img = new Image();
-            img.src = require("../../assets/sprites/Road.svg");
-            img.onload = () => {
-                this.ctx.drawImage(img, this.maxBrushSize/4, this.maxBrushSize, this.maxBrushSize/2, this.maxBrushSize/2);
-            };
+        img.src = require("../../assets/sprites/Rubber.svg");
+        img.onload = () => {
+            this.ctx.drawImage(img, 0, this.maxBrushSize, this.maxBrushSize, this.maxBrushSize);
+        };
     }
 
     brushes(){
-        this.ctx.font = "30px Arial";
-        this.ctx.fillStyle = "rgb(255,100,0)";
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         const vals = Object.keys(Brush).slice(0, Object.keys(Brush).length/2);
         vals.forEach(brushSize => {
             this.brush.push({brush: Number(brushSize),startX: this.maxBrushSize*1.5 - (Number(brushSize) * this.cellSize)/2, startY: Number(brushSize) * this.maxBrushSize, cell: this.cellSize});

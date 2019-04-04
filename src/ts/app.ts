@@ -32,6 +32,15 @@ unitCan.addEventListener("click", function (evt) {
   myBRUSH = "4";
   myBLOCK = "0";
 
+  var rubber = Object(unit.rubber);
+
+  if(rubber.startX <= mousePos.x && rubber.endX >= mousePos.x){
+    if(rubber.startY <= mousePos.y && mousePos.y <= rubber.endY + unit.maxBrushSize){
+      myBLOCK = "5";
+      editor.actingBrush[1] = Number(myBLOCK);
+    }
+  }
+
   unit.brush.map(brush => {
     var brushObject = Object(brush);
     var startX = brushObject.startX;
