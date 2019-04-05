@@ -4,7 +4,7 @@ import { UnitsControl } from "./view/units-control";
 export class Editor{
     private grid: Grid;
     private unitsControl: UnitsControl;
-    public actingBrush: number[] = [4,0];
+    public actingBrush: number[] = [4,1];
 
     constructor(grid: Grid, unitsControl: UnitsControl){
         this.grid = grid;

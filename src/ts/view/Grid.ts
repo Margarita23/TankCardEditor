@@ -4,7 +4,7 @@ import { Brush } from "./brush";
 import { Sprites } from './sprites';
 
 export class Grid {
-    private arena: Arena = new Arena;
+    public arena: Arena = new Arena;
     public canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("grid");;
     public ctx: CanvasRenderingContext2D = <CanvasRenderingContext2D>this.canvas.getContext("2d", { alpha: true });
 
@@ -24,6 +24,7 @@ export class Grid {
     };
 
     emptyArena(arena: Arena){
+        this.arena.blocks = [];
         this.ctx.fillStyle = "rgb(0,0,0)";
         this.ctx.fillRect(0, 0, this.canvas.width,  this.canvas.height);
         for(var i = 0; i < arena.size[0]; i++){
@@ -42,7 +43,31 @@ export class Grid {
         let i = Math.floor(x * (52 / activeBrush[0]) / this.arenaSize);
         let j = Math.floor(y * (52 / activeBrush[0]) / this.arenaSize);
         if((i >=0 && i < 52 / activeBrush[0]) && (j >= 0 && j < 52 / activeBrush[0])){
+            this.ctx.strokeStyle = "rgba(255,255,255, 0.6)";
+            this.ctx.strokeRect(i*this.cellSize*activeBrush[0], j*this.cellSize*activeBrush[0], this.cellSize*activeBrush[0], this.cellSize*activeBrush[0]);
+            this.ctx.fillRect(i*this.cellSize*activeBrush[0], j*this.cellSize*activeBrush[0], this.cellSize*activeBrush[0], this.cellSize*activeBrush[0]);
             this.ctx.drawImage(this.sprites.get("" + Brush[Number(activeBrush[0])] + Block[Number(activeBrush[1])]), i*this.cellSize*activeBrush[0], j*this.cellSize*activeBrush[0], this.cellSize*activeBrush[0], this.cellSize*activeBrush[0]);
+
+            for (let k=0; k < Number(activeBrush[0]); k++) {
+                for (let h=0; h < Number(activeBrush[0]); h++) {
+                    if(activeBrush[1] == 0){
+                        this.arena.blocks.splice(this.arena.blocks.indexOf({"x": k+i*activeBrush[0], "y": h+j*activeBrush[0], "unitType": activeBrush[1]+6}), 1);
+                    } else if(this.isUniq({"x": k+i*activeBrush[0], "y": h+j*activeBrush[0], "unitType": activeBrush[1]+6})){
+                        this.arena.blocks.push({"x": k+i*activeBrush[0], "y": h+j*activeBrush[0], "unitType": activeBrush[1]+6});
+                    }
+                }
+            }
         };
+        console.log(this.arena.blocks);
+    }
+
+    isUniq(currentObj: Object): boolean {
+        let res = true;
+        this.arena.blocks.forEach(obj => {
+            if((<any>obj)['x'] == (<any>currentObj)['x'] && (<any>obj)['y'] == (<any>currentObj)['y']){
+                res = false;
+            }
+        });
+        return res;
     }
 }
