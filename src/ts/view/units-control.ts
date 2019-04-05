@@ -8,15 +8,12 @@ export class UnitsControl{
     private totalWidth: number = window.innerWidth*0.2;
     private totalHeight: number = window.innerHeight;
 
-    private startWidth = window.innerWidth - this.totalWidth;
-
-    private blockValue: Block = Block.Brick;
-    private brushValue: Brush = Brush.OneCell;
     private cellSize: number;
     public maxBrushSize: number;
     public blocks: Object[] = [];
     public brush: Object[] = [];
     public rubber: Object = new Object();
+    public createButton: Object = new Object();
 
     constructor(cellSize: number){
         this.canvas = <HTMLCanvasElement>document.getElementById("units-control");
@@ -31,6 +28,7 @@ export class UnitsControl{
         this.rubberView();
         this.brushes();
         this.units();
+        this.createButtonView();
     };
 
     rubberView(){
@@ -58,8 +56,17 @@ export class UnitsControl{
             let img = new Image();
             img.src = require("../../assets/sprites/" + Brush[Brush.OneCell] + Block[Number(block)] + ".svg");
             img.onload = () => {
-                this.ctx.drawImage(img, this.canvas.width - this.maxBrushSize, Number(block) *  this.maxBrushSize * 2 + this.maxBrushSize, this.maxBrushSize, this.maxBrushSize);
+                this.ctx.drawImage(img, this.canvas.width - this.maxBrushSize, Number(block) *  this.maxBrushSize * 2, this.maxBrushSize, this.maxBrushSize);
             };
         });
+    }
+
+    createButtonView(){
+        this.createButton = new Object({startX: 0, startY: this.maxBrushSize * Object.keys(Block).length, endX: this.canvas.width, endY: this.maxBrushSize + this.maxBrushSize * Object.keys(Block).length});
+        let img = new Image();
+        img.src = require("../../assets/sprites/CreateButton.svg");
+        img.onload = () => {
+            this.ctx.drawImage(img, 0, this.maxBrushSize * Object.keys(Block).length, this.canvas.width, this.maxBrushSize);
+        };
     }
 }

@@ -2,7 +2,6 @@ import { Grid } from "./view/grid";
 import { UnitsControl } from "./view/units-control";
 import { Editor } from "./Editor";
 import { Brush } from "./view/brush";
-import { Block } from './view/block';
 
 let grid = new Grid();
 let unit = new UnitsControl(grid.cellSize);
@@ -28,6 +27,14 @@ canvas.addEventListener("click", function (evt) {
 unitCan.addEventListener("click", function (evt) {
   var mousePos = getMousePosition(unitCan, evt);
   var rubber = Object(unit.rubber);
+  var createButton = Object(unit.createButton);
+
+
+  if(createButton.startX <= mousePos.x && createButton.endX >= mousePos.x){
+    if(createButton.startY <= mousePos.y && mousePos.y <= createButton.endY){
+      console.log("Create new Arena");
+    }
+  }
 
   if(rubber.startX <= mousePos.x && rubber.endX >= mousePos.x){
     if(rubber.startY <= mousePos.y && mousePos.y <= rubber.endY + unit.maxBrushSize){
@@ -50,7 +57,7 @@ unitCan.addEventListener("click", function (evt) {
     var x = Object.values(block)[1];
     var blockSize = Object.values(block)[3];
     if((x < mousePos.x && mousePos.x < x + blockSize))
-      if(blockEnum*blockSize*2 + unit.maxBrushSize <= mousePos.y && (blockEnum*blockSize*2+blockSize + unit.maxBrushSize) >= mousePos.y){
+      if(blockEnum*blockSize*2 <= mousePos.y && (blockEnum*blockSize*2+blockSize) >= mousePos.y){
         editor.actingBrush[1] = Number(blockEnum);
       }
     });

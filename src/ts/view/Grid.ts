@@ -58,7 +58,6 @@ export class Grid {
                 }
             }
         };
-        console.log(this.arena.blocks);
     }
 
     isUniq(currentObj: Object): boolean {
